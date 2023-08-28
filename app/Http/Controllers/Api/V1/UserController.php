@@ -38,6 +38,7 @@ class UserController extends Controller
         $user = User::create($data);
         // Issue the token and return it
         return response()->json([
+            'success'   => true,
             'message'   => 'User created successfully',
             'token'     => issueToken($user),
         ]);

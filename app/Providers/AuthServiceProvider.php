@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Services\Auth\JwtGuard;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,15 @@ class AuthServiceProvider extends ServiceProvider
         // Add JWT Auth Guard driver to Auth
         Auth::extend('jwt', function ($app, $name, array $config) {
             return new JwtGuard(Auth::createUserProvider($config['provider']), $app->make('request'));
+        });
+
+        //Set Password validation rules
+        Password::defaults(function () {
+            return Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->uncompromised();
         });
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Auth\JwtToken;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,6 +53,15 @@ class User extends Authenticatable
         'is_admin'      => 'boolean',
         'is_marketing'  => 'boolean',
     ];
+
+    #region Relationships
+
+    public function tokens()
+    {
+        return $this->hasMany(JwtToken::class);
+    }
+
+    #endregion
 
     public function getJWTClaim()
     {

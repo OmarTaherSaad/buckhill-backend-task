@@ -117,4 +117,18 @@ class JwtGuard implements Guard
         $this->user = $user;
         return $this;
     }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        // Revoking token
+        $token = $this->request->bearerToken();
+        revokeToken($token);
+        $this->user = null;
+        return $this;
+    }
 }

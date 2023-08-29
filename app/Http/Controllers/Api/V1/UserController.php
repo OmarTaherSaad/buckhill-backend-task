@@ -65,9 +65,32 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function updateSelf(UpdateUserRequest $request)
     {
-        //
+        $data = $request->validated();
+        // Hash the password
+        if (isset($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+        // Update the user
+        auth()->user()->update($data);
+        // Return the updated user
+        return (new UserResource(auth()->user()))->response()->setStatusCode(200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroySelf()
+    {
+        /** @var User */
+        $user = auth()->user();
+        $user->deleteRelated();
+        $user->delete();
+        return response()->json([
+            'success'   => true,
+            'message'   => 'User deleted successfully',
+        ]);
     }
 
     /**
@@ -75,6 +98,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->deleteRelated();
+        $user->delete();
+        return response()->json([
+            'success'   => true,
+            'message'   => 'User deleted successfully',
+        ]);
     }
 }

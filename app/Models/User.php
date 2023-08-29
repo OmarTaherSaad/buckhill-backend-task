@@ -67,4 +67,14 @@ class User extends Authenticatable
     {
         return $this->uuid;
     }
+
+    public function deleteRelated()
+    {
+        $this->deleteTokens();
+    }
+
+    public function deleteTokens()
+    {
+        $this->tokens()->delete();
+    }
 }

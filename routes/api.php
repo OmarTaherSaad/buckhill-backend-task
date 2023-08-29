@@ -27,6 +27,8 @@ Route::prefix('v1')->group(static function () {
         Route::middleware('auth:api')->group(function () {
             Route::get('logout', [AuthController::class, 'logout'])->name('logout');
             Route::get('/', [UserController::class, 'showSelf'])->name('showSelf');
+            Route::put('edit', [UserController::class, 'updateSelf'])->name('updateSelf');
+            Route::delete('/', [UserController::class, 'destroySelf'])->name('destroySelf');
         });
     });
 });

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -18,21 +19,27 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'uuid' => $this->faker->uuid,
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'is_admin' => false,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('password'),
+            'avatar' => $this->faker->boolean ? $this->faker->uuid : null,
+            'address' => $this->faker->address,
+            'phone_number' => $this->faker->phoneNumber,
+            'is_marketing' => $this->faker->boolean,
+            'last_login_at' => $this->faker->boolean ? $this->faker->dateTimeBetween('-1 year', 'now') : null,
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the model is an admin.
      */
-    public function unverified(): static
+    public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'is_admin' => true,
         ]);
     }
 }

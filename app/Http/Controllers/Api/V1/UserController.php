@@ -19,14 +19,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreUserRequest $request)
@@ -85,19 +77,6 @@ class UserController extends Controller
     {
         /** @var User */
         $user = auth()->user();
-        $user->deleteRelated();
-        $user->delete();
-        return response()->json([
-            'success'   => true,
-            'message'   => 'User deleted successfully',
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
         $user->deleteRelated();
         $user->delete();
         return response()->json([

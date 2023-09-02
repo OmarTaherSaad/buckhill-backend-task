@@ -12,6 +12,7 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
+        \App\Models\OrderStatus::factory()->count(5)->create();
         \App\Models\Order::factory()->count(30)->create();
         // Create for each user 30 orders
         \App\Models\User::all()->each(function (\App\Models\User $user) {

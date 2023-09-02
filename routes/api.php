@@ -17,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(static function () {
+    Route::prefix('admin')->group(function () {
+        Route::middleware('guest:api')->group(function () {
+            Route::post('login', [AuthController::class, 'adminLogin'])->name('login');
+        });
+        Route::middleware(['auth:api', 'admin'])->group(function () {
+            Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+        });
+    });
+
     Route::prefix('user')->group(function () {
         Route::middleware('guest:api')->group(function () {
             Route::post('login', [AuthController::class, 'login'])->name('login');

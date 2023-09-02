@@ -37,6 +37,36 @@ class AuthController extends Controller
         ]);
     }
 
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->only(['email', 'password']);
+
+        if (auth()->validate($credentials)) {
+            $user = User::firstWhere('email', $credentials['email']);
+            if (!$user->is_admin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Login failed',
+                ], 401);
+            }
+            $token = issueToken($user);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Login failed',
+            ], 401);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login success',
+            'data' => [
+                'token' => $token,
+                'user' => new UserResource($user),
+            ],
+        ]);
+    }
+
     public function logout()
     {
         auth()->logout();

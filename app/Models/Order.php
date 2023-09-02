@@ -24,6 +24,7 @@ class Order extends Model
         'shipped_at' => 'datetime',
     ];
 
+    #region Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -38,4 +39,16 @@ class Order extends Model
     {
         return $this->belongsTo(Payment::class);
     }
+    #endregion
+
+    #region Mutators
+
+    public function getStatusAttribute()
+    {
+        return $this->orderStatus?->title;
+    }
+
+    #endregion
+
+
 }

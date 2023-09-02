@@ -36,12 +36,10 @@ class UserController extends Controller
         // Hash the password
         $data['password'] = bcrypt($data['password']);
         // Create the user
-        $user = User::create($data);
-        // Issue the token and return it
+        User::create($data);
         return response()->json([
             'success'   => true,
             'message'   => 'User created successfully',
-            'token'     => issueToken($user),
         ]);
     }
 

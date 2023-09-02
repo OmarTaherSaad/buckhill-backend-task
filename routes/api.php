@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
@@ -20,9 +21,13 @@ Route::prefix('v1')->group(static function () {
     Route::prefix('admin')->group(function () {
         Route::middleware('guest:api')->group(function () {
             Route::post('login', [AuthController::class, 'adminLogin'])->name('login');
+            Route::post('create', [AdminController::class, 'store'])->name('create');
         });
         Route::middleware(['auth:api', 'admin'])->group(function () {
             Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+            Route::get('user-listing', [AdminController::class, 'index'])->name('index');
+            Route::put('user-edit/{user:uuid}', [AdminController::class, 'update'])->name('update');
+            Route::delete('user-delete/{user:uuid}', [AdminController::class, 'destroy'])->name('destroy');
         });
     });
 

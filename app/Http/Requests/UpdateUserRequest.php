@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
@@ -25,7 +26,11 @@ class UpdateUserRequest extends FormRequest
         return [
             'first_name'    => 'required|string|max:255',
             'last_name'     => 'required|string|max:255',
-            'email'         => 'required|email|unique:users,email,' . auth()->id(),
+            'email'         => [
+                'required',
+                'email',
+                Rule::unique('users')->where(fn ($query) => $query->where('uuid', $this->route('user')))
+            ],
             'password'      => ['required', 'confirmed', Password::defaults()],
             'address'       => 'required|string|max:255',
             'phone_number'  => 'required|string|max:255',

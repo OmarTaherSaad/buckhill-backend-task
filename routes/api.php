@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(static function () {
-    Route::prefix('admin')->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
         Route::middleware('guest:api')->group(function () {
             Route::post('login', [AuthController::class, 'adminLogin'])->name('login');
             Route::post('create', [AdminController::class, 'store'])->name('create');
@@ -32,7 +32,7 @@ Route::prefix('v1')->group(static function () {
         });
     });
 
-    Route::prefix('user')->group(function () {
+    Route::prefix('user')->name('user.')->group(function () {
         Route::middleware('guest:api')->group(function () {
             Route::post('login', [AuthController::class, 'login'])->name('login');
             Route::post('create', [UserController::class, 'store'])->name('create');

@@ -29,6 +29,7 @@ Route::prefix('v1')->group(static function () {
             Route::get('/', [UserController::class, 'showSelf'])->name('showSelf');
             Route::put('edit', [UserController::class, 'updateSelf'])->name('updateSelf');
             Route::delete('/', [UserController::class, 'destroySelf'])->name('destroySelf');
+            Route::get('orders', [UserController::class, 'orders'])->name('orders.index');
         });
     });
 });

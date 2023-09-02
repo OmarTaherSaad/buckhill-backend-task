@@ -7,6 +7,7 @@ use App\Http\Requests\ListUserOrdersRequest;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\OrdersCollection;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Str;
 
@@ -103,5 +104,25 @@ class UserController extends Controller
             'success'   => true,
             'message'   => 'User deleted successfully',
         ]);
+    }
+
+    /**
+     * Display listing of user orders
+     */
+    public function orders(ListUserOrdersRequest $request)
+    {
+        /** @var User */
+        $user = auth()->user();
+        $orders = $user->orders();
+        if ($request->has('sortBy')) {
+            $orders = $orders->orderBy($request->input('sortBy'), $request->input('desc') ? 'desc' : 'asc');
+        }
+        $orders = $orders->paginate($request->input('limit', 10));
+        return (new OrdersCollection($orders))
+            ->additional([
+                'success'   => true,
+                'message'   => 'User orders retrieved successfully',
+            ])
+            ->response();
     }
 }

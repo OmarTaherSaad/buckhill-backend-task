@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(JwtToken::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     #endregion
 
     public function getJWTClaim()
@@ -76,5 +81,6 @@ class User extends Authenticatable
     public function deleteTokens()
     {
         $this->tokens()->delete();
+        $this->orders()->delete();
     }
 }

@@ -36,7 +36,9 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->is_admin || $user->is($model);
+        $userUpdate = $user->is($model);
+        $adminUpdate = $user->is_admin && !$model->is_admin;
+        return $userUpdate || $adminUpdate;
     }
 
     /**
@@ -44,7 +46,9 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->is_admin || $user->is($model);
+        $userDelete = $user->is($model);
+        $adminDelete = $user->is_admin && !$model->is_admin;
+        return $userDelete || $adminDelete;
     }
 
     /**

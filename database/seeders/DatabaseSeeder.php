@@ -12,11 +12,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //Create an admin account for testing if one doesn't exist
+        $email = 'admin@buckhill.co.uk';
+        $user = \App\Models\User::where('email', $email)->first();
+        if (!$user) {
+            \App\Models\User::factory()->create([
+                'first_name'    => 'Test',
+                'last_name'     => 'Admin',
+                'email'         => 'admin@buckhill.co.uk',
+                'is_admin'      => true,
+                'password'      => bcrypt('password'),
+            ]);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\OrderStatusController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,17 @@ Route::prefix('v1')->group(static function () {
             Route::put('edit', [UserController::class, 'updateSelf'])->name('updateSelf');
             Route::delete('/', [UserController::class, 'destroySelf'])->name('destroySelf');
             Route::get('orders', [UserController::class, 'orders'])->name('orders.index');
+        });
+    });
+
+    Route::middleware('auth:api')->group(function () {
+        //Order Statuses CRUD
+        Route::get('order-statuses', [OrderStatusController::class, 'index'])->name('order-status.index');
+        Route::prefix('order-status')->middleware('admin')->group(function () {
+            Route::post('create', [OrderStatusController::class, 'store'])->name('order-status.store');
+            Route::get('{orderStatus:uuid}', [OrderStatusController::class, 'show'])->name('order-status.show');
+            Route::put('{orderStatus:uuid}', [OrderStatusController::class, 'update'])->name('order-status.update');
+            Route::delete('{orderStatus:uuid}', [OrderStatusController::class, 'destroy'])->name('order-status.destroy');
         });
     });
 });

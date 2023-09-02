@@ -22,10 +22,10 @@ class ListUserOrdersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page'      => 'sometimes|integer|min:1',
-            'limit'     => 'sometimes|integer|between:1,100',
-            'sortBy'    => 'sometimes|string|in:created_at,updated_at,shipped_at,amount',
-            'desc'      => 'sometimes|boolean',
+            'page'      => 'nullable|integer|min:1',
+            'limit'     => 'nullable|integer|between:1,100',
+            'sortBy'    => 'nullable|string|in:created_at,updated_at,shipped_at,amount',
+            'desc'      => 'nullable|boolean',
         ];
     }
 }

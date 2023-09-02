@@ -46,9 +46,12 @@ if (!function_exists('validateToken')) {
      * @param string $token
      * @return \App\Models\User|false
      */
-    function validateToken(string $bearerToken)
+    function validateToken(string $bearerToken = null)
     {
         try {
+            if (!$bearerToken) {
+                return false;
+            }
             /** @var Lcobucci\JWT\Configuration */
             $configuration = resolve(Configuration::class);
             $parser = $configuration->parser();

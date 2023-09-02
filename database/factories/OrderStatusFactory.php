@@ -25,7 +25,7 @@ class OrderStatusFactory extends Factory
         ];
         return [
             'uuid' => $this->faker->uuid,
-            'title' => $this->faker->unique()->randomElement($statuses),
+            'title' => $this->faker->randomElement($statuses),
         ];
     }
 }

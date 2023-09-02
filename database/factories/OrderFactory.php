@@ -23,6 +23,7 @@ class OrderFactory extends Factory
                 'quantity' => $this->faker->numberBetween(1, 10),
             ];
         }
+        $orderStatus = \App\Models\OrderStatus::inRandomOrder()->first();
         return [
             'uuid' => $this->faker->uuid,
             'products' => $products,
@@ -34,7 +35,7 @@ class OrderFactory extends Factory
             'amount' => $this->faker->numberBetween(100, 1000),
             'shipped_at' => $this->faker->boolean ? $this->faker->dateTimeBetween('-1 year', 'now') : null,
             'user_id' => \App\Models\User::factory(),
-            'order_status_id' => \App\Models\OrderStatus::factory(),
+            'order_status_id' => $orderStatus ?? \App\Models\OrderStatus::factory(),
             'payment_id' => \App\Models\Payment::factory(),
         ];
     }

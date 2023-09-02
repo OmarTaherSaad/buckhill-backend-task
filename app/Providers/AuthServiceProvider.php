@@ -35,8 +35,7 @@ class AuthServiceProvider extends ServiceProvider
             return Password::min(8)
                 ->letters()
                 ->mixedCase()
-                ->numbers()
-                ->uncompromised();
+                ->numbers();
         });
     }
 }

@@ -24,5 +24,13 @@ class DatabaseSeeder extends Seeder
                 'password'      => bcrypt('password'),
             ]);
         }
+
+        // Run User, OrderStatus, Order, and Payment seeders
+        $this->call([
+            UserSeeder::class,
+            OrderStatusSeeder::class,
+            OrderSeeder::class,
+            PaymentSeeder::class,
+        ]);
     }
 }

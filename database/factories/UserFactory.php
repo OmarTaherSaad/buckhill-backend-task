@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'address' => $this->faker->address,
             'phone_number' => $this->faker->phoneNumber,
             'is_marketing' => $this->faker->boolean,
-            'last_login_at' => $this->faker->boolean ? $this->faker->dateTimeBetween('-1 year', 'now') : null,
+            'last_login_at' => $this->faker->boolean ? $this->faker->dateTimeBetween('-1 year', 'now')->getTimestamp() : null,
         ];
     }
 

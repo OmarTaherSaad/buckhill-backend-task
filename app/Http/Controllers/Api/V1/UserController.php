@@ -24,8 +24,6 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-        // Add UUID to the data
-        $data['uuid'] = Str::uuid()->toString();
         // Hash the password
         $data['password'] = bcrypt($data['password']);
         // Create the user

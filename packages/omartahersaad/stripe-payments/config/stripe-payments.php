@@ -5,7 +5,5 @@ return [
 
     'secret_key' => env('STRIPE_SECRET_KEY'),
 
-    'currency' => env('STRIPE_CURRENCY', 'USD'),
-
-    'path-prefix' => env('STRIPE_PATH_PREFIX', 'payment'),
+    'path-prefix' => env('STRIPE_PATH_PREFIX', 'stripe-payments'),
 ];

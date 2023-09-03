@@ -1,6 +1,6 @@
 <?php
 
-namespace OmarTaherSaad\StripePayment;
+namespace OmarTaherSaad\StripePayments;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -17,9 +17,12 @@ class StripePaymentServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         if ($this->app->runningInConsole()) {
+            // Publish config file
             $this->publishes([
                 __DIR__ . '/../config/stripe-payments.php' => $this->app->configPath('stripe-payments.php'),
             ], 'stripe-payments-config');
+            // Load migrations
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
 
         Stripe::setAppInfo(
@@ -49,8 +52,8 @@ class StripePaymentServiceProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::group([
-            'prefix' => config('stripe-payments.path-prefix'),
-            'namespace' => 'OmarTaherSaad\StripePayment\Http\Controllers',
+            'prefix' => config('stripe-payments.path_prefix'),
+            'namespace' => 'OmarTaherSaad\StripePayments\Http\Controllers',
             'as' => 'stripe-payment.',
         ], function () {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');

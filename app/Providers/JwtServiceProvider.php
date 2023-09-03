@@ -10,7 +10,7 @@ use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer;
 use \Lcobucci\JWT\Signer\Key\InMemory;
 
-class JWTServiceProvider extends ServiceProvider
+class JwtServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

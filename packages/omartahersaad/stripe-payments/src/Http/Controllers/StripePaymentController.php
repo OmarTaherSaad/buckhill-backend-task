@@ -5,6 +5,7 @@ namespace OmarTaherSaad\StripePayments\Http\Controllers;
 use OmarTaherSaad\StripePayments\Http\Requests\PerformPaymentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use OmarTaherSaad\StripePayments\Models\StripePaymentRequest;
 use OmarTaherSaad\StripePayments\StripePayment;
 
@@ -18,12 +19,10 @@ class StripePaymentController extends Controller
         $paymentData = [
             'success_url' => route('stripe-payment.callback', [
                 'status' => 'success',
-                'session_id' => '{CHECKOUT_SESSION_ID}'
-            ]),
+            ]) . '&session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('stripe-payment.callback', [
                 'status' => 'cancel',
-                'session_id' => '{CHECKOUT_SESSION_ID}'
-            ]),
+            ]) . '&session_id={CHECKOUT_SESSION_ID}',
             'line_items' => [
                 [
                     'price_data' => [
@@ -44,10 +43,7 @@ class StripePaymentController extends Controller
         ];
         try {
             // Create a new Stripe client
-            $stripe = new \Stripe\StripeClient([
-                'api_key' => config('stripe-payments.secret_key'),
-                'stripe_version' => StripePayment::STRIPE_API_VERSION,
-            ]);
+            $stripe = StripePayment::getClient();
             // Create a new checkout session
             $session = $stripe->checkout->sessions->create($paymentData);
             // Create a new Stripe payment request and save session ID & payload in it
@@ -69,5 +65,36 @@ class StripePaymentController extends Controller
                 'error' => $e->getMessage(),
             ]);
         }
+    }
+
+    public function callback(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'session_id' => 'required|string|exists:stripe_payment_requests,checkout_session_id',
+            'status' => 'required|string|in:success,cancel',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('home');
+        }
+        $data = $validator->validated();
+        $stripePaymentRequest = StripePaymentRequest::firstWhere('checkout_session_id', $data['session_id']);
+        //Get Checkout Session Status to check if the payment was really successful [Avoiding Fraud]
+        $stripe = StripePayment::getClient();
+        $session = $stripe->checkout->sessions->retrieve($data['session_id']);
+        if ($session->payment_status !== 'paid') {
+            $status = 'failure';
+        } else {
+            $status = 'success';
+        }
+        $stripePaymentRequest->update([
+            'callback_payload' => $session->values(),
+            'status' => $status,
+        ]);
+        // Redirect the user to the return page specified in the documentation
+        $redirectUrl = url("payment/{$stripePaymentRequest->order_uuid}/?") . http_build_query([
+            'status' => $status,
+            'gtw' => 'stripe',
+        ], '', '&');
+        return redirect($redirectUrl);
     }
 }

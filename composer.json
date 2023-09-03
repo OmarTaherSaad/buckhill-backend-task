@@ -7,13 +7,20 @@
         "framework"
     ],
     "license": "MIT",
+    "repositories": {
+        "omartahersaad/stripe-payments": {
+            "type": "path",
+            "url": "packages/omartahersaad/stripe-payments"
+        }
+    },
     "require": {
         "php": "^8.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/tinker": "^2.8",
         "lcobucci/clock": "^3.1",
-        "lcobucci/jwt": "^5.0"
+        "lcobucci/jwt": "^5.0",
+        "omartahersaad/stripe-payments": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

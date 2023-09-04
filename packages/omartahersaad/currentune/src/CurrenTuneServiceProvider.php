@@ -16,9 +16,26 @@ class CurrenTuneServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         if ($this->app->runningInConsole()) {
+            // Publish config file
+            $this->publishes([
+                __DIR__ . '/../config/currentune.php' => $this->app->configPath('currentune.php'),
+            ], 'currentune-config');
             // Load migrations
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/currentune.php',
+            'currentune'
+        );
     }
 
     /**
@@ -29,11 +46,11 @@ class CurrenTuneServiceProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::group([
-            'prefix' => config('conversion_route_path'),
+            'prefix' => config('currentune.conversion_route_path'),
             'namespace' => 'OmarTaherSaad\CurrenTune\Http\Controllers',
             'as' => 'currentune.',
         ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
         });
     }
 }

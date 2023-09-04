@@ -24,3 +24,7 @@
 
 ## Notes
 This package relies on rates from [European Central Bank](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html).
+
+## Endpoints
+This package expose an API GET endpoint, where you pass the amount and currency to convert to, Please check our documentation to see good examples of how this works.
+[Click here for the documentation.](https://app.swaggerhub.com/apis-docs/OmarTaherSaad/CurrenTunePackageAPIs/1.0.0)

@@ -2,11 +2,10 @@
 
 namespace OmarTaherSaad\CurrenTune;
 
-
 class CurrenTune
 {
     //Package version
-    const VERSION = '1.0.0';
+    public const VERSION = '1.0.0';
 
     /**
      * Get the latest currency rates from the European Central Bank

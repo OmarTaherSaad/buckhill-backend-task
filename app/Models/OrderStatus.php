@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderStatus extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory;
+    use HasUuid;
 
     protected $fillable = [
         'uuid',

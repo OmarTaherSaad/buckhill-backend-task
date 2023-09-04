@@ -8,5 +8,7 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, InteractsWithDatabase, DatabaseTransactions;
+    use CreatesApplication;
+    use InteractsWithDatabase;
+    use DatabaseTransactions;
 }

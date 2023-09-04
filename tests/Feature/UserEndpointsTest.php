@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class UserEndpointsTest extends TestCase
 {
-
     /**
      * Test user registration
      */

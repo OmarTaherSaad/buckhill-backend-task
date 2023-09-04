@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer;
-use \Lcobucci\JWT\Signer\Key\InMemory;
+use Lcobucci\JWT\Signer\Key\InMemory;
 
 class JwtServiceProvider extends ServiceProvider
 {

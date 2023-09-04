@@ -9,7 +9,6 @@ use OmarTaherSaad\StripePayments\Tests\TestCase;
 
 class StripeIntegrationTest extends TestCase
 {
-
     //Test creating a new Stripe client
     public function test_create_stripe_client()
     {

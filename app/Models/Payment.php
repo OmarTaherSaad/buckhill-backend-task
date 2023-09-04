@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory;
+    use HasUuid;
 
     protected $fillable = [
         'uuid',

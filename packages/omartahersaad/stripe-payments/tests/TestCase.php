@@ -7,9 +7,10 @@ use Illuminate\Testing\Concerns\TestDatabases;
 use OmarTaherSaad\StripePayments\StripePaymentServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-abstract class TestCase  extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
-    use RefreshDatabase, TestDatabases;
+    use RefreshDatabase;
+    use TestDatabases;
 
     protected function getPackageProviders($app)
     {

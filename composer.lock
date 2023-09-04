@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "114b73af065c5513217ce3e59b6bf22d",
+    "content-hash": "ff10beff906d9d4f0b112a45c13c6369",
     "packages": [
         {
             "name": "brick/math",
@@ -972,16 +972,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.21.0",
+            "version": "v10.21.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "96b15c7ac382a9adb4a56d40c640e782d669a112"
+                "reference": "ae93199f5349fd8a02364424249aad2a90185a95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/96b15c7ac382a9adb4a56d40c640e782d669a112",
-                "reference": "96b15c7ac382a9adb4a56d40c640e782d669a112",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ae93199f5349fd8a02364424249aad2a90185a95",
+                "reference": "ae93199f5349fd8a02364424249aad2a90185a95",
                 "shasum": ""
             },
             "require": {
@@ -1168,7 +1168,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-08-29T13:55:56+00:00"
+            "time": "2023-09-04T14:34:36+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -2377,12 +2377,55 @@
             "time": "2023-02-08T01:06:31+00:00"
         },
         {
+            "name": "omartahersaad/currentune",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "packages/omartahersaad/currentune",
+                "reference": "45c17cae38205146564c289d507e8a8525cb4a69"
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": "^10.0",
+                "php": "^8.2",
+                "symfony/http-kernel": "^6.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.10",
+                "phpunit/phpunit": "^10.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "OmarTaherSaad\\CurrenTune\\CurrenTuneServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OmarTaherSaad\\CurrenTune\\Tests\\": "tests",
+                    "OmarTaherSaad\\CurrenTune\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Omar Taher Saad",
+                    "email": "omartahersaad@outlook.com"
+                }
+            ],
+            "description": "Laravel Package for currency conversion with easiness",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "omartahersaad/stripe-payments",
             "version": "1.0.0",
             "dist": {
                 "type": "path",
                 "url": "packages/omartahersaad/stripe-payments",
-                "reference": "73c2f7f6946339b776d3e2ed46599b2b1c2ef382"
+                "reference": "a168a4620d62530f2ce4af251e942a9e6cb572b8"
             },
             "require": {
                 "ext-json": "*",
@@ -2393,6 +2436,7 @@
                 "symfony/http-kernel": "^6.0"
             },
             "require-dev": {
+                "orchestra/testbench": "^8.10",
                 "phpunit/phpunit": "^10.3"
             },
             "type": "library",
@@ -2405,12 +2449,8 @@
             },
             "autoload": {
                 "psr-4": {
+                    "OmarTaherSaad\\StripePayments\\Tests\\": "tests",
                     "OmarTaherSaad\\StripePayments\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "OmarTaherSaad\\StripePayments\\Tests\\": "tests/"
                 }
             },
             "authors": [

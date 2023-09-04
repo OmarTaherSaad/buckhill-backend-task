@@ -41,6 +41,10 @@ class CurrenTune
      */
     public static function convert($amount, $toCurrency)
     {
-        return $amount * self::getRate($toCurrency);
+        $rate = self::getRate($toCurrency);
+        if (!$rate) {
+            return false;
+        }
+        return $amount * $rate;
     }
 }

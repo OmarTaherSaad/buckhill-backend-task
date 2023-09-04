@@ -16,10 +16,16 @@ class StripePayment
     //Create a new Stripe client
     public static function getClient()
     {
-        return new \Stripe\StripeClient([
-            'api_key' => config('stripe-payments.secret_key'),
-            'stripe_version' => StripePayment::STRIPE_API_VERSION,
-        ]);
+        try {
+            return new \Stripe\StripeClient([
+                'api_key' => config('stripe-payments.secret_key'),
+                'stripe_version' => StripePayment::STRIPE_API_VERSION,
+            ]);
+        } catch (\Exception $e) {
+            //Log error
+            Log::error($e->getMessage());
+            return null;
+        }
     }
 
     //Get Checkout session by ID

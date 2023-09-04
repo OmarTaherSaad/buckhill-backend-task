@@ -37,3 +37,8 @@
 	- `details`
 
 By default, these models are expected to be `App\Models\Order` and `App\Models\Payment` but you can publish the package configuration file and update it with your custom models.
+
+## Endpoints
+This package is very simple to use, you have just one endpoint for submitting a payment, where you pass the amount and currency, along with order UUID, and we do the magic! we redirect the user to payment page and return him to the requested callback URL in the task requirments.
+
+[Click here for the documentation.](https://app.swaggerhub.com/apis/OmarTaherSaad/StripePaymentPackageAPIs/1.0.0)

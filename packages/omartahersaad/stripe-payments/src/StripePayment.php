@@ -19,7 +19,7 @@ class StripePayment
         try {
             return new \Stripe\StripeClient([
                 'api_key' => config('stripe-payments.secret_key'),
-                'stripe_version' => StripePayment::STRIPE_API_VERSION,
+                'stripe_version' => self::STRIPE_API_VERSION,
             ]);
         } catch (\Exception $e) {
             //Log error
@@ -28,11 +28,32 @@ class StripePayment
         }
     }
 
+    /**
+     * Create a new Checkout session
+     * @param array $paymentData
+     * @param string $orderUuid
+     * @return \Stripe\Checkout\Session
+     */
+    public static function createCheckoutSession(array $paymentData, $orderUuid): \Stripe\Checkout\Session
+    {
+        // Create a new Stripe client
+        $stripe = self::getClient();
+        // Create a new checkout session
+        $session = $stripe->checkout->sessions->create($paymentData);
+        // Create a new Stripe payment request and save session ID & payload in it
+        StripePaymentRequest::create([
+            'order_uuid' => $orderUuid,
+            'request_payload' => $paymentData,
+            'checkout_session_id' => $session->id,
+        ]);
+        return $session;
+    }
+
     //Get Checkout session by ID
     public static function getCheckoutSession($sessionId): ?\Stripe\Checkout\Session
     {
         try {
-            $stripe = StripePayment::getClient();
+            $stripe = self::getClient();
             return $stripe->checkout->sessions->retrieve($sessionId);
         } catch (\Stripe\Exception\ApiErrorException $e) {
             //Log error
@@ -45,7 +66,7 @@ class StripePayment
     public static function getChargeFromCheckoutSession(\Stripe\Checkout\Session $session): ?\Stripe\Charge
     {
         try {
-            $stripe = StripePayment::getClient();
+            $stripe = self::getClient();
             //Get Payment Intent
             $paymentIntent = $stripe->paymentIntents->retrieve($session->payment_intent);
             //Get Charge to get payment method details
@@ -75,7 +96,7 @@ class StripePayment
             $isPaid = $session && $session->payment_status == 'paid';
             if ($isPaid) {
                 //Get Charge to get payment method details
-                $charge = StripePayment::getChargeFromCheckoutSession($session);
+                $charge = self::getChargeFromCheckoutSession($session);
                 //Save the payment
                 $paymentModelClass = config('stripe-payments.payment_model');
                 //Assume that payment is whether credit card or bank transfer [For task limitations sake]

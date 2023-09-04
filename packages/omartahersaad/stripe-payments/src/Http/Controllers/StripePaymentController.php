@@ -42,16 +42,8 @@ class StripePaymentController extends Controller
             'client_reference_id' => $data['order_uuid'],
         ];
         try {
-            // Create a new Stripe client
-            $stripe = StripePayment::getClient();
             // Create a new checkout session
-            $session = $stripe->checkout->sessions->create($paymentData);
-            // Create a new Stripe payment request and save session ID & payload in it
-            StripePaymentRequest::create([
-                'order_uuid' => $data['order_uuid'],
-                'request_payload' => $paymentData,
-                'checkout_session_id' => $session->id,
-            ]);
+            $session = StripePayment::createCheckoutSession($paymentData, $data['order_uuid']);
             // Redirect the user to the checkout page
             return redirect($session->url);
         } catch (\Stripe\Exception\ApiErrorException $e) {

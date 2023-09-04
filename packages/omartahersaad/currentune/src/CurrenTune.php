@@ -31,7 +31,7 @@ class CurrenTune
     public static function getRate($currency)
     {
         $rates = self::getRates();
-        return $rates[strtolower($currency)];
+        return $rates[strtolower($currency)] ?? false;
     }
 
     /**

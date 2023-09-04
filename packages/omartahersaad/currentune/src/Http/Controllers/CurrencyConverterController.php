@@ -4,17 +4,32 @@ namespace OmarTaherSaad\CurrenTune\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use OmarTaherSaad\CurrenTune\CurrenTune;
 
 class CurrencyConverterController extends Controller
 {
     public function convert(Request $request)
     {
-        $data = $request->validate([
+        $validator = Validator::make($request->all(), [
             'amount'    => 'required|numeric|min:0.01',
             'to_currency' => 'required|string|size:3',
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid data provided.',
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+        $data = $validator->validated();
         $rate = CurrenTune::getRate($data['to_currency']);
+        if ($rate === false) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The currency you requested is not supported/valid.',
+            ], 400);
+        }
         return response()->json([
             'success' => true,
             'data' => [

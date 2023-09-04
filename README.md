@@ -4,7 +4,23 @@
 # Buckhill Backend Task
 
 ## Installation Notes
-1. JWT Setup
+1. Application
+	As any Laravel application, you need to do the following steps:
+	1. Configure the`.env` file according to your server.
+	2. Create a database and configure it in `.env` variables:
+`DB_CONNECTION`
+`DB_HOST`
+`DB_PORT`
+`DB_DATABASE`
+`DB_USERNAME`
+`DB_PASSWORD`
+	3. Run `composer install`.
+	4. Run `php  artisan  migrate`.
+	5. You may run `php artisan db:seed` for initial dummy data.
+	6. Run `php artisan serve` and enjoy the app!
+
+
+2. JWT Setup
 This application uses JWT for authentication with asymmetric key, so you need to:
 	
 	 1. Generate private and public keys

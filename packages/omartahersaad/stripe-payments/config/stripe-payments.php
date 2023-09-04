@@ -7,5 +7,7 @@ return [
 
     'path_prefix' => env('STRIPE_PATH_PREFIX', 'stripe-payments'),
 
-    'order_model' => env('STRIPE_ORDER_MODEL', 'App\Models\Order'),
+    'order_model' => 'App\Models\Order',
+
+    'payment_model' => 'App\Models\Payment',
 ];

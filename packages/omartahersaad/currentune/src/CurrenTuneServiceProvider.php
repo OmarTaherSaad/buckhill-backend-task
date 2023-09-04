@@ -5,7 +5,7 @@ namespace OmarTaherSaad\CurrenTune;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class CurrenTune extends ServiceProvider
+class CurrenTuneServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any package services.

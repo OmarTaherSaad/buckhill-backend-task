@@ -5,7 +5,7 @@ namespace OmarTaherSaad\CurrenTune\Tests\Unit;
 use OmarTaherSaad\CurrenTune\CurrenTune;
 use OmarTaherSaad\CurrenTune\Tests\TestCase;
 
-class JwtTokenTestCurrencyConverterTest extends TestCase
+class CurrencyConverterTest extends TestCase
 {
     //Test getting rate for a currency
     public function test_getting_rate_for_a_currency()

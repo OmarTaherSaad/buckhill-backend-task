@@ -2,20 +2,6 @@
 
 declare(strict_types=1);
 
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFinalClasses;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
-use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
-use SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff;
-use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
-use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
-use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
-use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
-use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
-use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
-
 return [
 
     /*
@@ -65,7 +51,7 @@ return [
     */
 
     'exclude' => [
-        'app/Providers'
+        'app/Providers',
     ],
 
     'add' => [],
@@ -78,7 +64,8 @@ return [
         \SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff::class,       // Class constant visibility
         \SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,       // Disallow empty
         \PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer::class,                             // No empty comment
-        \SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff::class,  // Useless function doc comment
+        // Useless function doc comment
+        \SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff::class,
 
         // Architecture
         \NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,            //Normal classes are forbidden
@@ -104,7 +91,7 @@ return [
         \PhpCsFixer\Fixer\Import\OrderedImportsFixer::class => [
             'imports_order' => ['class', 'const', 'function'],
             'sort_algorithm' => 'length',
-        ]
+        ],
     ],
 
     /*
@@ -137,6 +124,6 @@ return [
     |
     */
 
-    'threads' => null,
+    'threads' => 8,
 
 ];

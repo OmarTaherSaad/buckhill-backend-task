@@ -18,8 +18,6 @@ class CurrenTuneServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/currentune.php' => $this->app->configPath('currentune.php'),
             ], 'currentune-config');
-            // Load migrations
-            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
     }
 

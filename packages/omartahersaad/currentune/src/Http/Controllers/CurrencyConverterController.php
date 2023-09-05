@@ -17,8 +17,8 @@ class CurrencyConverterController extends Controller
             'amount' => 'required|numeric|min:0.01',
             'to_currency' => 'required|string|size:3',
         ]);
-        $rate = CurrenTune::getRate($data['to_currency']);
-        if ($rate === false) {
+        $responseData = CurrenTune::convertWithData($data['amount'], $data['to_currency']);
+        if ($responseData === false) {
             return response()->json([
                 'success' => false,
                 'message' => 'The currency you requested is not supported/valid.',
@@ -26,15 +26,7 @@ class CurrencyConverterController extends Controller
         }
         return response()->json([
             'success' => true,
-            'data' => [
-                'amount' => $data['amount'],
-                'to_currency' => $data['to_currency'],
-                'exchange_rate' => $rate,
-                'converted_amount' => number_format($rate * $data['amount'], 3, '.', ''),
-                /** Format the converted amount to 2 decimal places
-                 * & the European style of using a comma as the decimal separator */
-                'converted_amount_pretty' => number_format($rate * $data['amount'], 2, ',', '.'),
-            ],
+            'data' => $responseData,
         ]);
     }
 }

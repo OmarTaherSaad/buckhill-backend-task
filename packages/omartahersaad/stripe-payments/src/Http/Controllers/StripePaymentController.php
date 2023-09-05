@@ -36,17 +36,14 @@ class StripePaymentController extends Controller
 
     public function callback(Request $request)
     {
-        //By default, payment is considered failed
-        $status = 'failure';
-        $validator = Validator::make($request->all(), [
+        //Make response JSON to return error messages
+        $request->headers->set('Accept', 'application/json');
+        $data = $request->validate([
             'session_id' => 'required|string|exists:stripe_payment_requests,checkout_session_id',
             'status' => 'required|string|in:success,cancel',
         ]);
-        if ($validator->fails()) {
-            // No return url is specified, so we will redirect the user to a default page
-            return redirect(url("payment?") . http_build_query(['status' => $status, 'gtw' => 'stripe'], '', '&'));
-        }
-        $data = $validator->validated();
+        //By default, payment is considered failed
+        $status = 'failure';
         //Get Request to check if it is still pending
         $stripePaymentRequest = StripePaymentRequest::firstWhere('checkout_session_id', $data['session_id']);
         if ($stripePaymentRequest->status === 'pending') {

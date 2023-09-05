@@ -11,18 +11,12 @@ class CurrencyConverterController extends Controller
 {
     public function convert(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        //Make response JSON to return error messages
+        $request->headers->set('Accept', 'application/json');
+        $data = $request->validate([
             'amount' => 'required|numeric|min:0.01',
             'to_currency' => 'required|string|size:3',
         ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid data provided.',
-                'errors' => $validator->errors(),
-            ], 400);
-        }
-        $data = $validator->validated();
         $rate = CurrenTune::getRate($data['to_currency']);
         if ($rate === false) {
             return response()->json([

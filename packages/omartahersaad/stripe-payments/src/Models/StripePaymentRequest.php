@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class StripePaymentRequest extends Model
 {
-    protected $guarded = [];
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
     protected $fillable = [
         'order_uuid',
         'status',
@@ -17,6 +20,11 @@ class StripePaymentRequest extends Model
         'callback_payload',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
     protected $casts = [
         'request_payload' => 'array',
         'callback_payload' => 'array',

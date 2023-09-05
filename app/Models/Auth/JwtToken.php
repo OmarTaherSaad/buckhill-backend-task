@@ -29,14 +29,14 @@ class JwtToken extends Model
         'refreshed_at' => 'datetime',
     ];
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function isExpired()
+    public function isExpired(): bool
     {
-        return $this->expires_at->isPast();
+        return $this->expires_at?->isPast() ?? true;
     }
 
     public function revoke(): void

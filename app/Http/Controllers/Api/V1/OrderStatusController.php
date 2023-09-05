@@ -19,7 +19,7 @@ class OrderStatusController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ListOrderStatusesRequest $request)
+    public function index(ListOrderStatusesRequest $request): \Illuminate\Http\JsonResponse
     {
         $orderStatuses = OrderStatus::query()
             ->when($request->has('sortBy'), function ($query) use ($request): void {
@@ -32,7 +32,7 @@ class OrderStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrderStatusRequest $request)
+    public function store(StoreOrderStatusRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
         $orderStatus = OrderStatus::create($data);
@@ -40,37 +40,37 @@ class OrderStatusController extends Controller
             ->additional([
                 'success' => true,
                 'message' => 'Order status created successfully',
-            ]);
+            ])->response();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(OrderStatus $orderStatus)
+    public function show(OrderStatus $orderStatus): \Illuminate\Http\JsonResponse
     {
         return (new OrderStatusResource($orderStatus))
             ->additional([
                 'success' => true,
-            ]);
+            ])->response();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderStatusRequest $request, OrderStatus $orderStatus)
+    public function update(UpdateOrderStatusRequest $request, OrderStatus $orderStatus): \Illuminate\Http\JsonResponse
     {
         $orderStatus->update($request->validated());
         return (new OrderStatusResource($orderStatus))
             ->additional([
                 'success' => true,
                 'message' => 'Order status updated successfully',
-            ]);
+            ])->response();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrderStatus $orderStatus)
+    public function destroy(OrderStatus $orderStatus): \Illuminate\Http\JsonResponse
     {
         $orderStatus->delete();
         return response()->json([

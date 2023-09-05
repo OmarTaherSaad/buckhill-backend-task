@@ -23,7 +23,7 @@ class Payment extends Model
         'details' => 'array',
     ];
 
-    public function order()
+    public function order(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Order::class);
     }

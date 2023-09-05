@@ -57,19 +57,19 @@ class User extends Authenticatable
 
     #region Relationships
 
-    public function tokens()
+    public function tokens(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(JwtToken::class);
     }
 
-    public function orders()
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Order::class);
     }
 
     #endregion
 
-    public function getJWTClaim()
+    public function getJWTClaim(): string
     {
         return $this->uuid;
     }

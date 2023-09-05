@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Password as PasswordFacade;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request): \Illuminate\Http\JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
 
@@ -36,7 +36,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function adminLogin(Request $request)
+    public function adminLogin(Request $request): \Illuminate\Http\JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
 
@@ -66,7 +66,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout()
+    public function logout(): \Illuminate\Http\JsonResponse
     {
         auth()->logout();
         return response()->json([
@@ -75,7 +75,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function sendPasswordResetToken(Request $request)
+    public function sendPasswordResetToken(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'email' => 'required|email|exists:users,email',
@@ -94,7 +94,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function resetPassword(Request $request)
+    public function resetPassword(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'token' => 'required|string',

@@ -25,7 +25,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         // Add JWT Auth Guard driver to Auth
         Auth::extend('jwt', function ($app, $name, array $config) {
-            return new JwtGuard(Auth::createUserProvider($config['provider']), $app->make('request'));
+            $provider = Auth::createUserProvider($config['provider']);
+            if (!$provider) {
+                throw new \InvalidArgumentException('Auth user provider not found');
+            }
+            return new JwtGuard($provider, $app->make('request'));
         });
 
         //Set Password validation rules

@@ -18,6 +18,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $this->faker->seed($this->faker->uuid);
         return [
             'uuid' => $this->faker->uuid,
             'first_name' => $this->faker->firstName,

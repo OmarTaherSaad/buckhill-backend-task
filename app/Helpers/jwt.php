@@ -38,7 +38,7 @@ if (!function_exists('issueToken')) {
 if (!function_exists('validateToken')) {
     /**
      * Validate a JWT token
-     * @param string $token
+     * @param string $bearerToken
      */
     function validateToken(?string $bearerToken = null): \App\Models\User|false
     {
@@ -53,7 +53,7 @@ if (!function_exists('validateToken')) {
             $parsedToken = $parser->parse($bearerToken);
             /** @var JwtToken */
             $token = JwtToken::firstWhere('unique_id', $parsedToken->claims()->get('jti'));
-            if (!$token || $token->isExpired()) {
+            if (is_null($token) || $token->isExpired()) {
                 return false;
             }
             $validator = $configuration->validator();
@@ -78,11 +78,15 @@ if (!function_exists('validateToken')) {
 if (!function_exists('revokeToken')) {
     /**
      * Revoke a JWT token
-     * @param string $token
+     * @param string $bearerToken
+     * @return bool
      */
     function revokeToken(string $bearerToken): bool
     {
         try {
+            if (strlen($bearerToken) < 1) {
+                return false;
+            }
             /** @var Lcobucci\JWT\Configuration */
             $configuration = resolve(Configuration::class);
             $parser = $configuration->parser();

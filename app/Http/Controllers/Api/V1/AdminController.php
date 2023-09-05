@@ -20,7 +20,7 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ListUsersRequest $request)
+    public function index(ListUsersRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
         $users = User::query();
@@ -55,7 +55,7 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAdminRequest $request)
+    public function store(StoreAdminRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
         $data = array_merge($data, [
@@ -77,7 +77,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): \Illuminate\Http\JsonResponse
     {
         return (new UserResource($user))->response()->setStatusCode(200);
     }
@@ -85,7 +85,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
         // Hash the password
@@ -104,7 +104,7 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): \Illuminate\Http\JsonResponse
     {
         $user->deleteRelated();
         $user->delete();

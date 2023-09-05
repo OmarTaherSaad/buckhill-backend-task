@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAdminRequest extends FormRequest
 {
@@ -23,14 +23,14 @@ class StoreAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name'    => 'required|string|max:255',
-            'last_name'     => 'required|string|max:255',
-            'email'         => 'required|email|unique:users,email',
-            'password'      => ['required', 'confirmed', Password::defaults()],
-            'address'       => 'required|string|max:255',
-            'phone_number'  => 'required|string|max:255',
-            'marketing'     => 'nullable|boolean',
-            'avatar'        => 'nullable|uuid',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => ['required', 'confirmed', Password::defaults()],
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255',
+            'marketing' => 'nullable|boolean',
+            'avatar' => 'nullable|uuid',
         ];
     }
 }

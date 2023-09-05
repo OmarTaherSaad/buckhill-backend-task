@@ -5,7 +5,7 @@ if ($files === false) {
     return;
 }
 foreach ($files as $file) {
-    if ($file == __FILE__) {
+    if ($file === __FILE__) {
         continue;
     }
     require_once $file;

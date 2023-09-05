@@ -6,9 +6,9 @@ use Illuminate\Support\Str;
 
 trait HasUuid
 {
-    protected static function bootHasUuid()
+    protected static function bootHasUuid(): void
     {
-        static::creating(function ($model) {
+        static::creating(function ($model): void {
             //Check unique UUID
             $uuid = Str::uuid()->toString();
             while (static::where('uuid', $uuid)->count() > 0) {

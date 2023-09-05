@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ListOrderStatusesRequest;
 use App\Models\OrderStatus;
-use App\Http\Requests\StoreOrderStatusRequest;
-use App\Http\Requests\UpdateOrderStatusRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderStatusResource;
+use App\Http\Requests\StoreOrderStatusRequest;
+use App\Http\Requests\ListOrderStatusesRequest;
+use App\Http\Requests\UpdateOrderStatusRequest;
 
 class OrderStatusController extends Controller
 {
@@ -22,7 +22,7 @@ class OrderStatusController extends Controller
     public function index(ListOrderStatusesRequest $request)
     {
         $orderStatuses = OrderStatus::query()
-            ->when($request->has('sortBy'), function ($query) use ($request) {
+            ->when($request->has('sortBy'), function ($query) use ($request): void {
                 $query->orderBy($request->get('sortBy'), $request->get('desc') ? 'desc' : 'asc');
             })
             ->paginate($request->get('limit', 10));

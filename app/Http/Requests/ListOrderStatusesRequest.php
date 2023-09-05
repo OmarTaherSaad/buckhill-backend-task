@@ -22,10 +22,10 @@ class ListOrderStatusesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page'      => 'nullable|integer|min:1',
-            'limit'     => 'nullable|integer|between:1,100',
-            'sortBy'    => 'nullable|string|in:title,created_at,updated_at',
-            'desc'      => 'nullable|boolean',
+            'page' => 'nullable|integer|min:1',
+            'limit' => 'nullable|integer|between:1,100',
+            'sortBy' => 'nullable|string|in:title,created_at,updated_at',
+            'desc' => 'nullable|boolean',
         ];
     }
 }

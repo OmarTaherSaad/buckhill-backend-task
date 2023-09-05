@@ -22,15 +22,15 @@ class ListUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page'      => 'nullable|integer|min:1',
-            'limit'     => 'nullable|integer|between:1,100',
-            'sortBy'    => 'nullable|string|in:created_at,updated_at,shipped_at,amount',
-            'desc'      => 'nullable|boolean',
+            'page' => 'nullable|integer|min:1',
+            'limit' => 'nullable|integer|between:1,100',
+            'sortBy' => 'nullable|string|in:created_at,updated_at,shipped_at,amount',
+            'desc' => 'nullable|boolean',
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email'     => 'nullable|email',
-            'phone'     => 'nullable|string|max:255',
-            'address'   => 'nullable|string|max:255',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
             'created_at' => 'nullable|date',
             'marketing' => 'nullable|boolean',
         ];

@@ -4,11 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Models\Auth\JwtToken;
 use App\Traits\HasUuid;
+use App\Models\Auth\JwtToken;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -52,9 +52,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
-        'password'      => 'hashed',
-        'is_admin'      => 'boolean',
-        'is_marketing'  => 'boolean',
+        'password' => 'hashed',
+        'is_admin' => 'boolean',
+        'is_marketing' => 'boolean',
     ];
 
     #region Relationships
@@ -76,12 +76,12 @@ class User extends Authenticatable
         return $this->uuid;
     }
 
-    public function deleteRelated()
+    public function deleteRelated(): void
     {
         $this->deleteTokens();
     }
 
-    public function deleteTokens()
+    public function deleteTokens(): void
     {
         $this->tokens()->delete();
         $this->orders()->delete();

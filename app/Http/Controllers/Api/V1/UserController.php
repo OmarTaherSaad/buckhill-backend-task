@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ListUserOrdersRequest;
 use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\OrdersCollection;
-use App\Http\Resources\UserResource;
-use Illuminate\Support\Str;
+use App\Http\Requests\ListUserOrdersRequest;
 
 class UserController extends Controller
 {
@@ -29,8 +28,8 @@ class UserController extends Controller
         // Create the user
         User::create($data);
         return response()->json([
-            'success'   => true,
-            'message'   => 'User created successfully',
+            'success' => true,
+            'message' => 'User created successfully',
         ]);
     }
 
@@ -78,8 +77,8 @@ class UserController extends Controller
         $user->deleteRelated();
         $user->delete();
         return response()->json([
-            'success'   => true,
-            'message'   => 'User deleted successfully',
+            'success' => true,
+            'message' => 'User deleted successfully',
         ]);
     }
 
@@ -97,8 +96,8 @@ class UserController extends Controller
         $orders = $orders->paginate($request->input('limit', 10));
         return (new OrdersCollection($orders))
             ->additional([
-                'success'   => true,
-                'message'   => 'User orders retrieved successfully',
+                'success' => true,
+                'message' => 'User orders retrieved successfully',
             ])
             ->response();
     }

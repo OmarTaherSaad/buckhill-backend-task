@@ -27,7 +27,7 @@ class CurrenTune
      * Get the latest rate for a currency
      * @param string $currency The currency to get the rate for (e.g. USD)
      */
-    public static function getRate($currency)
+    public static function getRate(string $currency)
     {
         $rates = self::getRates();
         return $rates[strtolower($currency)] ?? false;
@@ -38,7 +38,7 @@ class CurrenTune
      * @param float $amount The amount to convert in EUR
      * @param string $toCurrency The currency to convert to (e.g. USD)
      */
-    public static function convert($amount, $toCurrency)
+    public static function convert(float $amount, string $toCurrency)
     {
         $rate = self::getRate($toCurrency);
         if (!$rate) {

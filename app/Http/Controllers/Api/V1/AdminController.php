@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ListUserOrdersRequest;
-use App\Http\Requests\ListUsersRequest;
-use App\Http\Requests\StoreAdminRequest;
 use App\Models\User;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Http\Resources\OrdersCollection;
-use App\Http\Resources\UserResource;
-use App\Http\Resources\UsersCollection;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use App\Http\Requests\ListUsersRequest;
+use App\Http\Resources\UsersCollection;
+use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class AdminController extends Controller
 {
@@ -76,8 +73,8 @@ class AdminController extends Controller
         // Create the admin user
         User::create($data);
         return response()->json([
-            'success'   => true,
-            'message'   => 'Admin created successfully',
+            'success' => true,
+            'message' => 'Admin created successfully',
         ]);
     }
 
@@ -103,8 +100,8 @@ class AdminController extends Controller
         $user->update($data);
         // Return the updated user
         return response()->json([
-            'success'   => true,
-            'message'   => 'User updated successfully',
+            'success' => true,
+            'message' => 'User updated successfully',
         ]);
     }
 
@@ -116,8 +113,8 @@ class AdminController extends Controller
         $user->deleteRelated();
         $user->delete();
         return response()->json([
-            'success'   => true,
-            'message'   => 'User deleted successfully',
+            'success' => true,
+            'message' => 'User deleted successfully',
         ]);
     }
 }

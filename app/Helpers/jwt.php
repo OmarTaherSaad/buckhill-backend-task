@@ -1,19 +1,14 @@
 <?php
 
-use App\Models\Auth\JwtToken;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Auth\JwtToken;
 use Lcobucci\JWT\Configuration;
-use Lcobucci\JWT\Signer\Key\InMemory;
-use Lcobucci\JWT\Token;
-use Lcobucci\JWT\UnencryptedToken;
 
 if (!function_exists('issueToken')) {
     /**
      * Create a JWT token
-     * @return string
      */
-    function issueToken(User $user)
+    function issueToken(User $user): string
     {
         /** @var Lcobucci\JWT\Configuration */
         $configuration = resolve(Configuration::class);
@@ -44,9 +39,8 @@ if (!function_exists('validateToken')) {
     /**
      * Validate a JWT token
      * @param string $token
-     * @return \App\Models\User|false
      */
-    function validateToken(string $bearerToken = null)
+    function validateToken(?string $bearerToken = null): \App\Models\User|false
     {
         try {
             if (!$bearerToken) {
@@ -85,9 +79,8 @@ if (!function_exists('revokeToken')) {
     /**
      * Revoke a JWT token
      * @param string $token
-     * @return bool
      */
-    function revokeToken(string $bearerToken)
+    function revokeToken(string $bearerToken): bool
     {
         try {
             /** @var Lcobucci\JWT\Configuration */

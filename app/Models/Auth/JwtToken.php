@@ -3,8 +3,8 @@
 namespace App\Models\Auth;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class JwtToken extends Model
 {
@@ -39,7 +39,7 @@ class JwtToken extends Model
         return $this->expires_at->isPast();
     }
 
-    public function revoke()
+    public function revoke(): void
     {
         $this->update([
             'expires_at' => now(),

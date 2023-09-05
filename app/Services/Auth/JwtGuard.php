@@ -16,8 +16,6 @@ class JwtGuard implements Guard
     /**
      * Create a new authentication guard.
      *
-     * @param \Illuminate\Contracts\Auth\UserProvider $provider
-     * @param \Illuminate\Http\Request $request
      * @return void
      */
     public function __construct(UserProvider $provider, Request $request)
@@ -29,46 +27,37 @@ class JwtGuard implements Guard
 
     /**
      * Determine if the current user is authenticated.
-     *
-     * @return bool
      */
-    public function check()
+    public function check(): bool
     {
         $user = validateToken($this->request->bearerToken());
         if ($user) {
             $this->setUser($user);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
      * Determine if the current user is a guest.
-     *
-     * @return bool
      */
-    public function guest()
+    public function guest(): bool
     {
         return !$this->check();
     }
 
     /**
      * Get the currently authenticated user.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function user()
+    public function user(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
         return $this->user;
     }
 
     /**
      * Get the ID for the currently authenticated user.
-     *
-     * @return int|string|null
      */
-    public function id()
+    public function id(): int|string|null
     {
         return $this->user()?->getAuthIdentifier();
     }
@@ -77,9 +66,8 @@ class JwtGuard implements Guard
      * Validate a user's credentials.
      *
      * @param  array  $credentials
-     * @return bool
      */
-    public function validate(array $credentials = [])
+    public function validate(array $credentials = []): bool
     {
         if (empty($credentials['email']) || empty($credentials['password'])) {
             return false;
@@ -91,17 +79,14 @@ class JwtGuard implements Guard
             $this->setUser($user);
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
      * Determine if the guard has a user instance.
-     *
-     * @return bool
      */
-    public function hasUser()
+    public function hasUser(): bool
     {
         return !is_null($this->user());
     }
@@ -109,7 +94,6 @@ class JwtGuard implements Guard
     /**
      * Set the current user.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return void
      */
     public function setUser(Authenticatable $user)

@@ -2,10 +2,10 @@
 
 namespace OmarTaherSaad\StripePayments\Http\Requests;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
 
 class PerformPaymentRequest extends FormRequest
 {
@@ -31,7 +31,7 @@ class PerformPaymentRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(
             response()->json([

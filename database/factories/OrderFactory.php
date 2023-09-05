@@ -23,11 +23,8 @@ class OrderFactory extends Factory
                 'quantity' => $this->faker->numberBetween(1, 10),
             ];
         }
-        //Try getting order status from database, if not found, create one
-        $orderStatus = \App\Models\OrderStatus::inRandomOrder()->first();
-        if (!$orderStatus) {
-            $orderStatus = \App\Models\OrderStatus::factory()->create();
-        }
+        // Create a new order status
+        $orderStatus = \App\Models\OrderStatus::factory()->create();
         $paymentId = null;
         if (in_array($orderStatus->title, ['paid', 'shipped'])) {
             $paymentId = \App\Models\Payment::factory()->create()->id;

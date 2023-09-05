@@ -54,7 +54,8 @@ Route::prefix('v1')->group(static function (): void {
             Route::post('create', [OrderStatusController::class, 'store'])->name('order-status.store');
             Route::get('{orderStatus:uuid}', [OrderStatusController::class, 'show'])->name('order-status.show');
             Route::put('{orderStatus:uuid}', [OrderStatusController::class, 'update'])->name('order-status.update');
-            Route::delete('{orderStatus:uuid}', [OrderStatusController::class, 'destroy'])->name('order-status.destroy');
+            Route::delete('{orderStatus:uuid}', [OrderStatusController::class, 'destroy'])
+                ->name('order-status.destroy');
         });
     });
 });

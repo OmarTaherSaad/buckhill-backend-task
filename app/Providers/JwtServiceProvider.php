@@ -2,13 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Support\ServiceProvider;
-use Lcobucci\Clock\SystemClock;
-use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer;
+use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
+use Illuminate\Support\ServiceProvider;
 
 class JwtServiceProvider extends ServiceProvider
 {

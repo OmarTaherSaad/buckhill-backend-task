@@ -2,10 +2,10 @@
 
 namespace OmarTaherSaad\CurrenTune\Tests;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Concerns\TestDatabases;
-use OmarTaherSaad\CurrenTune\CurrenTuneServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use OmarTaherSaad\CurrenTune\CurrenTuneServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {

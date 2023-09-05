@@ -82,7 +82,6 @@ class AuthController extends Controller
         ]);
 
         //Generate password reset token
-        /** @var User */
         $user = User::firstWhere('email', $request->email);
         $token = PasswordFacade::getRepository()->create($user);
 

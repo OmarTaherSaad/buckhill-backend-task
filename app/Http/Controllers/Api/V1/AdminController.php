@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\ListUsersRequest;
@@ -27,10 +26,7 @@ class AdminController extends Controller
         $users = User::query();
 
         //Rename 'phone' to 'phone_number' if exists
-        if (isset($data['phone'])) {
-            $data['phone_number'] = $data['phone'];
-            unset($data['phone']);
-        }
+        $data['phone_number'] = $data['phone'] ?? null;
         //Do filters for string fields
         $stringFilterKeys = ['first_name', 'last_name', 'email', 'phone_number', 'address'];
         foreach ($stringFilterKeys as $key) {
@@ -62,14 +58,14 @@ class AdminController extends Controller
     public function store(StoreAdminRequest $request)
     {
         $data = $request->validated();
-        // Add UUID to the data
-        $data['uuid'] = Str::uuid()->toString();
-        // Hash the password
-        $data['password'] = bcrypt($data['password']);
-        //Add admin flag
-        $data['is_admin'] = true;
-        //Rename marketing flag
-        $data['is_marketing'] = $data['marketing'] ?? false;
+        $data = array_merge($data, [
+            //Add admin flag
+            'is_admin' => true,
+            //Rename marketing flag
+            'is_marketing' => $data['marketing'] ?? false,
+            // Hash the password
+            $data['password'] => bcrypt($data['password']),
+        ]);
         // Create the admin user
         User::create($data);
         return response()->json([

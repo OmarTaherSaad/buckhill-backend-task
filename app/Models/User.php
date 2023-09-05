@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Traits\HasUuid;
 use App\Models\Auth\JwtToken;
 use Illuminate\Notifications\Notifiable;

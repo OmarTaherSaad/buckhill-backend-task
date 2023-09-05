@@ -19,6 +19,7 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param StoreUserRequest $request
      */
     public function store(StoreUserRequest $request)
     {
@@ -35,6 +36,7 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
+     * @return \Illuminate\Http\JsonResponse
      */
     public function showSelf()
     {
@@ -45,6 +47,8 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(User $user)
     {
@@ -53,6 +57,8 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param UpdateUserRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateSelf(UpdateUserRequest $request)
     {
@@ -69,10 +75,10 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroySelf()
     {
-        /** @var User */
         $user = auth()->user();
         $user->deleteRelated();
         $user->delete();
@@ -84,10 +90,11 @@ class UserController extends Controller
 
     /**
      * Display listing of user orders
+     * @param ListUserOrdersRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function orders(ListUserOrdersRequest $request)
     {
-        /** @var User */
         $user = auth()->user();
         $orders = $user->orders();
         if ($request->has('sortBy')) {

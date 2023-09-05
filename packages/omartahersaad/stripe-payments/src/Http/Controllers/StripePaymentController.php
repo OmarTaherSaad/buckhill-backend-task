@@ -2,12 +2,12 @@
 
 namespace OmarTaherSaad\StripePayments\Http\Controllers;
 
-use OmarTaherSaad\StripePayments\Http\Requests\PerformPaymentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
-use OmarTaherSaad\StripePayments\Models\StripePaymentRequest;
 use OmarTaherSaad\StripePayments\StripePayment;
+use OmarTaherSaad\StripePayments\Models\StripePaymentRequest;
+use OmarTaherSaad\StripePayments\Http\Requests\PerformPaymentRequest;
 
 class StripePaymentController extends Controller
 {
@@ -15,35 +15,9 @@ class StripePaymentController extends Controller
     {
         // Get validated data
         $data = $request->validated();
-        // Prepare payment data
-        $paymentData = [
-            'success_url' => route('stripe-payment.callback', [
-                'status' => 'success',
-            ]) . '&session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('stripe-payment.callback', [
-                'status' => 'cancel',
-            ]) . '&session_id={CHECKOUT_SESSION_ID}',
-            'line_items' => [
-                [
-                    'price_data' => [
-                        // Set currency from validated data
-                        'currency' => $data['currency'],
-                        'product_data' => [
-                            'name' => "Order #{$data['order_uuid']}",
-                        ],
-                        // Set amount from validated data and convert it to cents
-                        'unit_amount' => $data['amount'] * 100,
-                    ],
-                    'quantity' => 1,
-                ],
-            ],
-            'mode' => 'payment',
-            // Set currency from validated data
-            'client_reference_id' => $data['order_uuid'],
-        ];
         try {
             // Create a new checkout session
-            $session = StripePayment::createCheckoutSession($paymentData, $data['order_uuid']);
+            $session = StripePayment::createCheckoutSession($data, $data['order_uuid']);
             // Redirect the user to the checkout page
             return redirect($session->url);
         } catch (\Stripe\Exception\ApiErrorException $e) {
@@ -68,26 +42,24 @@ class StripePaymentController extends Controller
             'status' => 'required|string|in:success,cancel',
         ]);
         if ($validator->fails()) {
-            //
+            // No return url is specified, so we will redirect the user to a default page
+            return redirect(url("payment?") . http_build_query(['status' => $status, 'gtw' => 'stripe',], '', '&'));
         }
         $data = $validator->validated();
         //Get Request to check if it is still pending
         $stripePaymentRequest = StripePaymentRequest::firstWhere('checkout_session_id', $data['session_id']);
-        if ($stripePaymentRequest->status != 'pending') {
-            return redirect(url("payment/{$stripePaymentRequest->order_uuid}/?") . http_build_query([
-                'status' => $status,
-                'gtw' => 'stripe',
-            ], '', '&'));
+        if ($stripePaymentRequest->status == 'pending') {
+            //Get Checkout Session Status to check if the payment was really successful [Avoiding Fraud]
+            $checkoutSession = StripePayment::getCheckoutSession($data['session_id']);
+            //Check if the payment was successful
+            $isPaid = StripePayment::handlePaymentStatus($checkoutSession, $stripePaymentRequest);
+            $status = $isPaid ? 'success' : 'failure';
         }
-        //Get Checkout Session Status to check if the payment was really successful [Avoiding Fraud]
-        $checkoutSession = StripePayment::getCheckoutSession($data['session_id']);
-        //Check if the payment was successful
-        $isPaid = StripePayment::handlePaymentStatus($checkoutSession, $stripePaymentRequest);
-        $status = $isPaid ? 'success' : 'failure';
         // Redirect the user to the return page specified in the documentation
-        return redirect(url("payment/{$stripePaymentRequest->order_uuid}/?") . http_build_query([
+        $redirectUrl = url("payment/{$stripePaymentRequest->order_uuid}/?") . http_build_query([
             'status' => $status,
             'gtw' => 'stripe',
-        ], '', '&'));
+        ], '', '&');
+        return redirect($redirectUrl);
     }
 }
